@@ -1,0 +1,19 @@
+# Mengabaikan folder dependency lokal (WAJIB!)
+node_modules
+npm-debug.log
+
+# Mengabaikan file build hasil production lokal
+dist
+build
+
+# Mengabaikan file environment lokal
+.env
+.env.local
+.env.development
+.env.production
+
+# Mengabaikan file git dan konfigurasi editor
+.git
+.gitignore
+.vscode
+README.md

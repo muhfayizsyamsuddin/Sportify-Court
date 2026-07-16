@@ -1,0 +1,19 @@
+# Mengabaikan folder dependency lokal (WAJIB!)
+node_modules
+npm-debug.log
+
+# Mengabaikan file environment sensitif agar tidak bocor ke dalam image
+.env
+.env.test
+.env.local
+.env.development
+.env.production
+
+# Mengabaikan file log, git, dan dokumentasi
+.git
+.gitignore
+README.md
+
+# Mengabaikan folder build lokal jika ada
+dist
+build
