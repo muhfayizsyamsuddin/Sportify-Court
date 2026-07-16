@@ -23,9 +23,10 @@ services:
     ports:
       - 3000:3000
     environment:
-      - DB_HOST=postgres-db
+      - NODE_ENV=production
+      - DB_HOST=sportify-court-db
       - DB_PORT=5432
-      - DATABASE_URL=postgres://sportify-court-user:sportify-court-password555@postgres-db:5432/sportify-court-db
+      - DATABASE_URL=postgresql://sportify-court-user:sportify-court-password555@sportify-court-db:5432/sportify-court-db
     networks:
       - sportify-court-net
     volumes:

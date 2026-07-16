@@ -1,9 +1,20 @@
-console.log({ env: process.env.NODE_ENV });
-if (process.env.NODE_ENV !== "production") {
-  // hanya dipake ketika proses development
-  // kalo production kita tidak menggunakan library dotenv -> env bawaan dari pm2 (runner)
+// console.log({ env: process.env.NODE_ENV });
+// if (process.env.NODE_ENV !== "production") {
+//   // hanya dipake ketika proses development
+//   // kalo production kita tidak menggunakan library dotenv -> env bawaan dari pm2 (runner)
+//   require("dotenv").config();
+// }
+
+// 1. Ambil env dari file .env HANYA jika dijalankan di luar Docker (non-Docker lokal)
+// Di dalam Docker, variabel ini sudah otomatis ter-inject lewat docker-compose
+if (!process.env.DATABASE_URL) {
   require("dotenv").config();
 }
+
+console.log({ 
+  NODE_ENV: process.env.NODE_ENV || "development", 
+  DB_HOST: process.env.DB_HOST 
+});
 
 const express = require("express");
 const cors = require("cors");
