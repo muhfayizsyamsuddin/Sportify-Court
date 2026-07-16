@@ -1,44 +1,60 @@
 services:
 
   client:
-    build:
-      context: ./Client/sportify-court
+    # build:
+    #   context: ./Client/sportify-court
     image: faizms14/sportify-court-client:v1.0
-    env_file: ./Client/sportify-court/.env
+    # env_file: ./Client/sportify-court/.env
     container_name: sportify-court-client
-    ports:
-      - 5174:5174
+    # ports:
+    #   - 5174:5174
     networks:
+      - proxy_net
       - sportify-court-net
-    volumes:
-      - ./Client/sportify-court:/app
-      - /app/node_modules
+    # volumes:
+    #   - ./Client/sportify-court:/app
+    #   - /app/node_modules
+    labels:
+      traefik.enable: true
+      traefik.docker.network: proxy_net
+      traefik.http.routers.sportifycourt.rule: Host(`sportifycourt.faizms.com`)
+      traefik.http.routers.sportifycourt.entrypoints: websecure
+      traefik.http.routers.sportifycourt.tls.certresolver: myresolver
+      traefik.http.services.sportifycourt.loadbalancer.server.port: 5174
   
   server:
-    build:
-      context: ./Server
+    # build:
+    #   context: ./Server
     image: faizms14/sportify-court-server:v1.0
-    env_file: ./Server/.env
+    env_file: ./.env
     container_name: sportify-court-server
-    ports:
-      - 3000:3000
+    # ports:
+    #   - 3000:3000
     environment:
       - NODE_ENV=production
       - DB_HOST=sportify-court-db
       - DB_PORT=5432
       - DATABASE_URL=postgresql://sportify-court-user:sportify-court-password555@sportify-court-db:5432/sportify-court-db
     networks:
+      - proxy_net
       - sportify-court-net
-    volumes:
-      - ./Server:/app
-      - /app/node_modules
+    # volumes:
+    #   - ./Server:/app
+    #   - /app/node_modules
+    labels:
+      traefik.enable: true
+      traefik.docker.network: proxy_net
+      traefik.http.routers.sportifycourt-api.rule: Host(`api-sportifycourt.faizms.com`)
+      traefik.http.routers.sportifycourt-api.entrypoints: websecure
+      traefik.http.routers.sportifycourt-api.tls.certresolver: myresolver
+      traefik.http.services.sportifycourt-api.loadbalancer.server.port: 3000
   
   database:
     image: postgres:16-alpine
-    env_file: ./Server/.env
+    env_file: ./.env
     container_name: sportify-court-db
-    ports:
-      - 5432:5432
+    # ports:
+    #   - 5432:5432
     environment:
       - POSTGRES_USER=sportify-court-user
       - POSTGRES_PASSWORD=sportify-court-password555
@@ -50,16 +66,26 @@ services:
 
   adminer:
     image: adminer:latest
-    env_file: ./Server/.env
+    env_file: ./.env
     container_name: sportify-court-adminer
-    ports:
-      - 8000:8080
+    # ports:
+    #   - 8000:8080
     networks:
+      - proxy_net
       - sportify-court-net
+    labels:
+      traefik.enable: true
+      traefik.docker.network: proxy_net
+      traefik.http.routers.sportifycourt-db.rule: Host(`db-sportifycourt.faizms.com`)
+      traefik.http.routers.sportifycourt-db.entrypoints: websecure
+      traefik.http.routers.sportifycourt-db.tls.certresolver: myresolver
+      traefik.http.services.sportifycourt-db.loadbalancer.server.port: 8080
 
 networks:
   sportify-court-net:
     driver: bridge
+  proxy_net:
+    external: true
 
 volumes:
   sportify-court-db-volume:

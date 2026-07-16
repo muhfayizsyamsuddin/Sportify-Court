@@ -17,3 +17,6 @@ README.md
 # Mengabaikan folder build lokal jika ada
 dist
 build
+
+Dockerfile
+docker-compose.yml

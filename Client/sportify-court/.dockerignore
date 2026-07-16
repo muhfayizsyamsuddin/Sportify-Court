@@ -17,3 +17,6 @@ build
 .gitignore
 .vscode
 README.md
+
+Dockerfile
+docker-compose.yml
