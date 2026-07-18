@@ -2,7 +2,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: "https://api.faizms.com",
+  baseURL: "https://api-sportifycourt.faizms.com",
 });
 // export const api = axios.create({
 //   // baseURL: import.meta.env.VITE_API_BASE_URL,

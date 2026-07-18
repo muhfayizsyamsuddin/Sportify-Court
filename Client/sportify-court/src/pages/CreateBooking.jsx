@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import { api } from "../helpers/http-client";
-import axios from "axios";
+// import axios from "axios";
 import { ErrorAlert, SuccessAlert } from "../helpers/alert";
 
 export default function BookingForm() {
@@ -38,7 +38,8 @@ export default function BookingForm() {
     setLoadingAi(true);
     console.log("🧠 AI Recommendation: Memulai permintaan ke backend...");
     try {
-      const response = await axios.post("http://localhost:3000/ai/recommend", {
+      // const response = await axios.post("http://localhost:3000/ai/recommend", {
+      const response = await api.post("/ai/recommend", {
         courtId: id,
         preference,
         availableSlots: [

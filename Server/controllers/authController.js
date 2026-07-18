@@ -21,6 +21,7 @@ module.exports = class authController {
         },
       });
     } catch (err) {
+      console.error(err);
       next(err);
     }
   }
