@@ -20,7 +20,7 @@ services:
       traefik.http.routers.sportifycourt.rule: Host(`sportifycourt.faizms.com`)
       traefik.http.routers.sportifycourt.entrypoints: websecure
       traefik.http.routers.sportifycourt.tls.certresolver: myresolver
-      traefik.http.services.sportifycourt.loadbalancer.server.port: 80
+      traefik.http.services.sportifycourt.loadbalancer.server.port: 80 # 5174  
   
   server:
     # build:
