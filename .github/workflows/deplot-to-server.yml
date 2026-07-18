@@ -51,4 +51,5 @@ jobs:
                   mkdir -p ~/project/sportifycourt
                   cd ~/project/sportifycourt
                   echo ${{ vars.APP_COMPOSE }} | base64 -d > docker-compose.yml
+                  docker compose pull
                   docker compose up -d
