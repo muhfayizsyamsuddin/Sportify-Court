@@ -5,8 +5,7 @@
 
 ## Link Demo
 
-[Demo App](https://sportifycourt.faizms.com)
-[https://sportify-court.vercel.app](https://sportify-court.vercel.app)
+(https://sportifycourt.faizms.com) || (https://sportify-court.vercel.app)
 
 ## Fitur Utama
 
@@ -23,7 +22,7 @@
 
 - Kelola data lapangan (CRUD)
 
-## 🧩 Struktur Database & ERD Detail
+## Struktur Database & ERD Detail
 
 ### 1. Users
 
