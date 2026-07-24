@@ -4,9 +4,9 @@ const { verifyToken } = require("../helpers/jwt");
 //! authentication = untuk identify user/verifikasi(dia itu siapa?)
 module.exports = async function authentication(req, res, next) {
   //! Extract token: Get Bearer token from authorization header
-  console.log("Headers:", req.headers);
+  // console.log("Headers:", req.headers);
   const bearerToken = req.headers.authorization;
-  console.log("🔐 Authorization Header:", bearerToken);
+  // console.log("🔐 Authorization Header:", bearerToken);
   if (!bearerToken) {
     next({ name: "Unauthorized", message: "Invalid token" }); //401
     return;

@@ -8,8 +8,8 @@ const axios = require("axios");
 module.exports = class paymentController {
   static async initiateMidtransTrx(req, res, next) {
     try {
-      console.log("Request Headers:", req.headers);
-      console.log("Request Body:", req.body);
+      // console.log("Request Headers:", req.headers);
+      // console.log("Request Body:", req.body);
 
       if (!process.env.MIDTRANS_SERVER_KEY) {
         throw {
@@ -17,20 +17,20 @@ module.exports = class paymentController {
           message: "MIDTRANS_SERVER_KEY is missing",
         };
       }
-      console.log("MIDTRANS_SERVER_KEY:", process.env.MIDTRANS_SERVER_KEY);
+      // console.log("MIDTRANS_SERVER_KEY:", process.env.MIDTRANS_SERVER_KEY);
       let snap = new midtransClient.Snap({
         // Set to true if you want Production Environment (accept real transaction).
         isProduction: false,
         serverKey: process.env.MIDTRANS_SERVER_KEY,
         clientKey: process.env.MIDTRANS_CLIENT_KEY,
       });
-      console.log("Request Body:", req.body);
+      // console.log("Request Body:", req.body);
       const { BookingId } = req.body;
       if (!BookingId) {
         throw { name: "InvalidInput", message: "BookingId is required" };
       }
-      console.log("User ID:", req.user.id);
-      console.log("Booking ID:", req.body.BookingId);
+      // console.log("User ID:", req.user.id);
+      // console.log("Booking ID:", req.body.BookingId);
       if (!req.body.BookingId) {
         return res.status(400).json({ message: "BookingId is required" });
       }
@@ -77,7 +77,7 @@ module.exports = class paymentController {
       try {
         // 1.create transaction to midtrans
         transaction = await snap.createTransaction(parameter);
-        console.log("📦 Midtrans Transaction Response:", transaction);
+        // console.log("📦 Midtrans Transaction Response:", transaction);
         // transaction token
         if (!transaction.token) {
           throw new Error(
@@ -100,7 +100,7 @@ module.exports = class paymentController {
 
       res.json({ message: "Order created", transactionToken, orderId });
     } catch (err) {
-      console.log("❌ INITIATE MIDTRANS TRX ERROR:");
+      // console.log("❌ INITIATE MIDTRANS TRX ERROR:");
       console.dir(err, { depth: null });
       next(err);
     }
@@ -120,9 +120,9 @@ module.exports = class paymentController {
       if (!order) {
         return res.status(404).json({ message: "Order not found" });
       }
-      console.log("🔍 Order:", order);
-      console.log("Headers:", req.headers);
-      console.log("Authorization Header:", req.headers.authorization);
+      // console.log("🔍 Order:", order);
+      // console.log("Headers:", req.headers);
+      // console.log("Authorization Header:", req.headers.authorization);
 
       if (order.status === "paid") {
         return res.status(400).json({ message: "Account already upgraded" });
@@ -130,7 +130,7 @@ module.exports = class paymentController {
 
       const serverKey = process.env.MIDTRANS_SERVER_KEY;
       const base64ServerKey = Buffer.from(serverKey + ":").toString("base64");
-      console.log(`Authorization: Basic ${base64ServerKey}`);
+      // console.log(`Authorization: Basic ${base64ServerKey}`);
       const { data } = await axios.get(
         `https://api.sandbox.midtrans.com/v2/${orderId}/status`,
         {
@@ -139,7 +139,7 @@ module.exports = class paymentController {
           },
         }
       );
-      console.log("📦 Midtrans Response:", data);
+      // console.log("📦 Midtrans Response:", data);
       // midtrans validasi status pembayaran
       if (data.transaction_status === "capture" && data.status_code === "200") {
         // Update status pembayaran di database

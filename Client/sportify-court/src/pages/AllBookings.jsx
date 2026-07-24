@@ -23,7 +23,7 @@ export default function AllBookings() {
       const response = await api.get(`/bookings${query}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log("🚀 ~ fetchBookings ~ response.data:", response.data);
+      // console.log("🚀 ~ fetchBookings ~ response.data:", response.data);
       setBookings(response.data);
     } catch (err) {
       console.error("❌ Gagal ambil semua booking:", err);

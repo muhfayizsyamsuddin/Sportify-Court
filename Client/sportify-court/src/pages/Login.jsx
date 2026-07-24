@@ -17,7 +17,7 @@ export default function Login() {
         email,
         password,
       });
-      console.log("🚀 ~ response:", response);
+      // console.log("🚀 ~ response:", response);
       const access_token = response.data?.access_token;
       const role = response.data?.user?.role;
       const name = response.data?.user?.name;
@@ -43,12 +43,12 @@ export default function Login() {
   };
 
   async function handleCredentialResponse(response) {
-    console.log("Encoded JWT ID token: " + response.credential);
+    // console.log("Encoded JWT ID token: " + response.credential);
     try {
       const res = await api.post("/auth/login/google", {
         id_token: response.credential,
       });
-      console.log("🚀 ~ Google Login Response:", res);
+      // console.log("🚀 ~ Google Login Response:", res);
       const access_token = res.data?.access_token;
       const role = res.data?.user?.role;
       const name = res.data?.user?.name;
@@ -58,9 +58,9 @@ export default function Login() {
       localStorage.setItem("access_token", access_token);
       localStorage.setItem("role", role);
       localStorage.setItem("name", name);
-      console.log("🚀 ~ Google Login Role:", role);
-      const nameUser = localStorage.getItem("name");
-      console.log("🚀 ~ handleCredentialResponse ~ name:", nameUser);
+      // console.log("🚀 ~ Google Login Role:", role);
+      localStorage.getItem("name");
+      // console.log("🚀 ~ handleCredentialResponse ~ name:", nameUser);
       // localStorage.setItem("name", response.data?.user?.name);
       if (role === "admin") {
         navigate("/admin/bookings");
