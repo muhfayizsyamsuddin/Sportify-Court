@@ -4,6 +4,7 @@ const { signToken } = require("../helpers/jwt");
 const { Op, or } = require("sequelize");
 const dayjs = require("dayjs");
 const axios = require("axios");
+const crypto = require("crypto");
 
 module.exports = class paymentController {
   static async initiateMidtransTrx(req, res, next) {
@@ -159,4 +160,74 @@ module.exports = class paymentController {
       next(err);
     }
   }
+
+  static async midtransNotification(req, res, next) {
+  try {
+    const {
+      order_id,
+      transaction_status,
+      status_code,
+      gross_amount,
+      signature_key,
+    } = req.body;
+
+    // ==========================
+    // VALIDASI SIGNATURE MIDTRANS
+    // ==========================
+    const serverKey = process.env.MIDTRANS_SERVER_KEY;
+
+    const hash = crypto
+      .createHash("sha512")
+      .update(order_id + status_code + gross_amount + serverKey)
+      .digest("hex");
+
+    if (hash !== signature_key) {
+      return res.status(403).json({
+        message: "Invalid Signature",
+      });
+    }
+
+    const payment = await Payment.findOne({
+      where: {
+        orderId: order_id,
+      },
+    });
+
+    if (!payment) {
+      return res.status(404).json({
+        message: "Payment not found",
+      });
+    }
+
+    switch (transaction_status) {
+      case "capture":
+      case "settlement":
+        await payment.update({
+          status: "paid",
+          paidAt: new Date(),
+        });
+        break;
+
+      case "pending":
+        await payment.update({
+          status: "pending",
+        });
+        break;
+
+      case "expire":
+      case "cancel":
+      case "deny":
+        await payment.update({
+          status: "failed",
+        });
+        break;
+    }
+
+    return res.status(200).json({
+      message: "Notification processed",
+    });
+  } catch (err) {
+    next(err);
+  }
+}
 };

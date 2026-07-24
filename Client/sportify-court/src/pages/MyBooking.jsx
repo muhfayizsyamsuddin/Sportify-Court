@@ -63,9 +63,39 @@ export default function MyBookings() {
           onSuccess: async function () {
             /* You may add your own implementation here */
             // console.log("Payment Success:", result);
-            await api.patch("/payments/me/upgrade", {
-              orderId: data.orderId,
+            // await api.patch("/payments/me/upgrade", {
+            //   orderId: data.orderId,
+            // });
+
+            window.snap.pay(data.transactionToken, {
+              onSuccess: async () => {
+                SuccessAlert("Payment successful!");
+
+                setTimeout(async () => {
+                  try {
+                    const res = await api.get("/bookings/mine");
+                    setBookings(res.data);
+                  } catch (err) {
+                    console.error("Failed to refresh bookings:", err);
+                  }
+                }, 2000);
+              },
+
+              onPending: (result) => {
+                console.log("Pending:", result);
+                ErrorAlert("Waiting for payment confirmation.");
+              },
+
+              onError: (error) => {
+                console.error("Payment Error:", error);
+                ErrorAlert("Payment failed.");
+              },
+
+              onClose: () => {
+                console.log("Snap popup closed");
+              },
             });
+
             SuccessAlert("Payment successful!");
             const res = await api.get("/bookings/mine");
             setBookings(res.data);

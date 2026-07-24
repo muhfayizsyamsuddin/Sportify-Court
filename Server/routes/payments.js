@@ -4,6 +4,14 @@ const authentication = require("../middleware/authentication");
 const paymentController = require("../controllers/paymentController");
 const errorHandler = require("../middleware/errorHandler");
 
+// ==========================
+// MIDTRANS WEBHOOK
+// ==========================
+router.post(
+  "/midtrans/notification",
+  paymentController.midtransNotification
+);
+
 router.use(authentication);
 
 router.patch("/me/upgrade", paymentController.upgradeAccount); // hanya user yang login
