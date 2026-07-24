@@ -56,11 +56,13 @@ export default function MyBookings() {
       const { data } = await api.post("/payments/midtrans/initiate", {
         BookingId: bookingId,
       });
+      console.log("Initiate Response:", data);
+      console.log("Snap:", window.snap);
       if (window.snap && typeof window.snap.pay === "function") {
         window.snap.pay(data.transactionToken, {
-          onSuccess: async function (result) {
+          onSuccess: async function () {
             /* You may add your own implementation here */
-            console.log("Payment Success:", result);
+            // console.log("Payment Success:", result);
             await api.patch("/payments/me/upgrade", {
               orderId: data.orderId,
             });

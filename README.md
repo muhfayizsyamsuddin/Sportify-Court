@@ -1,11 +1,12 @@
-### IP-RMT63
-
-# Sportify Court
+# Sportify Court Application
 
 **Sportify Court** adalah aplikasi web untuk booking lapangan olahraga (futsal, badminton, basket, dll) secara online. Fitur utama meliputi pencarian lapangan, booking jadwal, pembayaran digital, rekomendasi AI, dan dashboard admin. Stack teknologi: Express.js, React + Redux, PostgreSQL, Midtrans, GeminiAI.
+---
 
-**Alasan:**
-Aplikasi ini fokus pada **booking lapangan olahraga** seperti futsal, badminton, dan basket. Pengguna dapat memilih waktu, lokasi, dan jenis olahraga yang diinginkan. Fungsionalitas utama adalah menyewa fasilitas olahraga secara efisien berbasis web sehingga termasuk kategori **Sport**.
+## Link Demo
+
+[Demo App](https://sportifycourt.faizms.com)
+[https://sportify-court.vercel.app](https://sportify-court.vercel.app)
 
 ## Fitur Utama
 
