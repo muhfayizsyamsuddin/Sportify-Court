@@ -76,6 +76,7 @@ export default function Login() {
     }
   }
   useEffect(() => {
+    console.log(import.meta.env.VITE_GOOGLE_CLIENT_ID);
     google.accounts.id.initialize({
       client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
       callback: handleCredentialResponse,
