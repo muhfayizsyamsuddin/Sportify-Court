@@ -27,7 +27,16 @@ const paymentRoutes = require("./routes/payments"); // nanti
 // const errorHandler = require("./middleware/errorHandler"); // nanti
 const aiRoutes = require("./routes/ai"); // untuk AI
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "https://sportifycourt.faizms.com",
+      "http://localhost:5173",
+    ],
+    methods: ["GET","POST","PUT","PATCH","DELETE"],
+    allowedHeaders: ["Content-Type","Authorization"],
+  })
+);
 app.use(express.urlencoded({ extended: false }));
 
 // ⚠️ PENTING: PASANG RAW BODY HANYA UNTUK MIDTRANS CALLBACK

@@ -7,20 +7,20 @@ export default function MyBookings() {
   const [loading, setLoading] = useState(false);
   // const [payingId, setPayingId] = useState(null);
 
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://app.sandbox.midtrans.com/snap/snap.js";
-    script.setAttribute(
-      "data-client-key",
-      import.meta.env.VITE_MIDTRANS_CLIENT_KEY
-    );
-    script.async = true;
-    document.body.appendChild(script);
+  // useEffect(() => {
+  //   const script = document.createElement("script");
+  //   script.src = "https://app.sandbox.midtrans.com/snap/snap.js";
+  //   script.setAttribute(
+  //     "data-client-key",
+  //     import.meta.env.VITE_MIDTRANS_CLIENT_KEY
+  //   );
+  //   script.async = true;
+  //   document.body.appendChild(script);
 
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
+  //   return () => {
+  //     document.body.removeChild(script);
+  //   };
+  // }, []);
   useEffect(() => {
     async function fetchBookings() {
       try {
@@ -29,7 +29,7 @@ export default function MyBookings() {
         setBookings(res.data);
         SuccessAlert("Bookings fetched successfully!");
       } catch (err) {
-        console.error("❌ Gagal ambil data bookings:", err);
+        console.error("Gagal ambil data bookings:", err);
         const errors =
           err.response?.data?.message || err.message || "Something went wrong!";
         ErrorAlert(errors, "Fetch Booking Failed");

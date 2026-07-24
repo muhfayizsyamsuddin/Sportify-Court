@@ -19,7 +19,7 @@ api.interceptors.request.use((config) => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
-  console.log(">>> Axios Config:", config);
+  // console.log(">>> Axios Config:", config);
   return config;
 });
 // apiPrivate.interceptors.request.use((config) => {

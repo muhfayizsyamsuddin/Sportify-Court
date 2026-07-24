@@ -1,15 +1,15 @@
 // server.js
 require("dotenv").config();
-const cors = require("cors");
+// const cors = require("cors");
 const app = require("./app");
 
-app.use(
-  cors({
-    origin: "https://sportifycourts.web.app", // <- GANTI sesuai domain client kamu
-    // credentials: true, // kalau pakai cookie auth (optional)
-  })
-);
-console.log("NODE_ENV:", process.env.NODE_ENV);
+// app.use(
+//   cors({
+//     origin: "https://sportifycourts.web.app", // <- GANTI sesuai domain client kamu
+//     // credentials: true, // kalau pakai cookie auth (optional)
+//   })
+// );
+// console.log("NODE_ENV:", process.env.NODE_ENV);
 
 const PORT = process.env.PORT || 3000;
 
