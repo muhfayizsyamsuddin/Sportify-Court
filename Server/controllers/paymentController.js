@@ -77,6 +77,7 @@ module.exports = class paymentController {
       try {
         // 1.create transaction to midtrans
         transaction = await snap.createTransaction(parameter);
+        console.dir(transaction, { depth: null });
         // console.log("📦 Midtrans Transaction Response:", transaction);
         // transaction token
         if (!transaction.token) {
